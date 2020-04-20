@@ -25,7 +25,7 @@ public class ByteUtil {
      * @version : 1.0
      * @since 2020/4/15 14:52
      **/
-    public static byte[] hexStringToByteArray(String hexString) {
+    public static byte[] hexString2ByteArray(String hexString) {
         if (hexString == null || hexString.equals("")) {
             return null;
         }
