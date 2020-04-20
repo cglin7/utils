@@ -17,30 +17,6 @@ public class ByteUtil {
     private final static String hexDigits = "0123456789ABCDEF";
 
     /**
-     * 十六进制字符串转字节数组
-     *
-     * @param hexString: 十六进制格式字符串
-     * @return byte[]:
-     * @author : cgl
-     * @version : 1.0
-     * @since 2020/4/15 14:52
-     **/
-    public static byte[] hexString2ByteArray(String hexString) {
-        if (hexString == null || hexString.equals("")) {
-            return null;
-        }
-        hexString = hexString.replace(" ", "").toUpperCase();
-        int length = hexString.length() / 2;
-        char[] hexChars = hexString.toCharArray();
-        byte[] bytes = new byte[length];
-        for (int i = 0; i < length; i++) {
-            int pos = i * 2;
-            bytes[i] = (byte) (hexDigits.indexOf(hexChars[pos]) << 4 | hexDigits.indexOf(hexChars[pos + 1]));
-        }
-        return bytes;
-    }
-
-    /**
      * 整数转字节数组（默认为大端模式）
      *
      * @param num: 数字（暂时只支持整数Short，Integer，Long）
@@ -95,7 +71,7 @@ public class ByteUtil {
     }
 
     /**
-     * int型转十六进制字符串
+     * 数字型转十六进制字符串
      *
      * @param num:
      * @return java.lang.String:
@@ -108,7 +84,7 @@ public class ByteUtil {
     }
 
     /**
-     * int型转十六进制字符串
+     * 数字型转十六进制字符串
      *
      * @param num:  数字（暂时只支持整数Short，Integer，Long）
      * @param mode: 模式（小端：0  大端：1）
@@ -118,12 +94,49 @@ public class ByteUtil {
      * @since 2020/4/15 14:46
      **/
     public static String num2HexString(Number num, Mode mode) {
-        StringBuilder result = new StringBuilder();
         byte[] bytes = num2ByteArray(num, mode);
+        return byteArray2HexString(bytes);
+    }
+
+    /**
+     * 字节数组转十六进制格式字符串
+     *
+     * @param bytes: 数字（暂时只支持整数Short，Integer，Long）
+     * @return byte[]:
+     * @author : cgl
+     * @version : 1.0
+     * @since 2020/4/17 14:15
+     **/
+    public static String byteArray2HexString(byte[] bytes) {
+        StringBuilder result = new StringBuilder();
         for (byte b : bytes) {
             result.append(hexDigits.charAt(b >>> 4 & 0xF)).append(hexDigits.charAt(b & 0xF));
         }
         return result.toString();
+    }
+
+    /**
+     * 十六进制字符串转字节数组
+     *
+     * @param hexString: 十六进制格式字符串
+     * @return byte[]:
+     * @author : cgl
+     * @version : 1.0
+     * @since 2020/4/15 14:52
+     **/
+    public static byte[] hexString2ByteArray(String hexString) {
+        if (hexString == null || hexString.equals("")) {
+            return null;
+        }
+        hexString = hexString.replace(" ", "").toUpperCase();
+        int length = hexString.length() / 2;
+        char[] hexChars = hexString.toCharArray();
+        byte[] bytes = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int pos = i * 2;
+            bytes[i] = (byte) (hexDigits.indexOf(hexChars[pos]) << 4 | hexDigits.indexOf(hexChars[pos + 1]));
+        }
+        return bytes;
     }
 
     enum Mode {
