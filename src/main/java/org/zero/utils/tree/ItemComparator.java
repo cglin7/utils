@@ -1,7 +1,6 @@
 package org.zero.utils.tree;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import java.util.Comparator;
 
@@ -12,7 +11,6 @@ import java.util.Comparator;
  * @version : 1.0
  * @since : 2019/11/28 17:19
  **/
-@Data
 @AllArgsConstructor
 public class ItemComparator<T> implements Comparator<T> {
 

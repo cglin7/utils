@@ -1,7 +1,8 @@
 package org.zero.utils.tree;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,8 @@ import java.util.List;
  * @version : 1.0
  * @since : 2019/11/28 17:19
  **/
-@Data
+@Getter
+@Setter
 public class Tree {
 
     /**

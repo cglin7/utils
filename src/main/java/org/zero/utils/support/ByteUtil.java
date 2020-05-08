@@ -63,8 +63,8 @@ public class ByteUtil {
                 bytes[i] = (byte) (value >>> (i * 8) & 0xFF);
             }
         } else {
-            for (int i = 0; i < 4; i++) {
-                bytes[byteArrLength - i - 1] = (byte) (value >>> (i * 8) & 0xFF);
+            for (int i = byteArrLength - 1; i >= 0; i--) {
+                bytes[i] = (byte) (value >>> (i * 8) & 0xFF);
             }
         }
         return bytes;
@@ -107,7 +107,7 @@ public class ByteUtil {
      * @version : 1.0
      * @since 2020/4/17 14:15
      **/
-    public static String byteArray2HexString(byte[] bytes) {
+    public static String byteArray2HexString(byte... bytes) {
         StringBuilder result = new StringBuilder();
         for (byte b : bytes) {
             result.append(hexDigits.charAt(b >>> 4 & 0xF)).append(hexDigits.charAt(b & 0xF));
@@ -139,7 +139,33 @@ public class ByteUtil {
         return bytes;
     }
 
-    enum Mode {
+    /**
+     * 十六进制字符串转数字（暂时只支持到long型）
+     *
+     * @param hexString:
+     * @return long:
+     * @author : cgl
+     * @version : 1.0
+     * @since 2020/5/8 9:41
+     **/
+    public static long hexString2Long(String hexString) {
+        char[] chars = hexString.toUpperCase().toCharArray();
+        long sum = 0;
+        // 超过8个字节就不转换了
+        if (chars.length > 16) {
+            return 0;
+        }
+        for (int i = 0; i < chars.length; i++) {
+            int index = hexDigits.indexOf(String.valueOf(chars[i]));
+            if (index == -1) {
+                return 0;
+            }
+            sum += index << ((chars.length - i - 1) * 4);
+        }
+        return sum;
+    }
+
+    public enum Mode {
         /**
          * 大端模式
          */
